@@ -37,7 +37,6 @@ public class JdbcTacoRepository implements TacoRepository {
 	}
 
 	private long saveTacoInfo(Taco design) {
-		System.out.println("Fecha de creación del taco: " + design.getCreateAt().getTime()); // Impresión de la fecha
 		
 		PreparedStatementCreatorFactory pscf = new PreparedStatementCreatorFactory(
 				"INSERT INTO Taco (name, createdAt) VALUES(?, ?)", 
