@@ -29,6 +29,7 @@ public class JdbcTacoRepository implements TacoRepository {
 		
 		long tacoId = saveTacoInfo(design);
 		design.setId(tacoId);
+		
 		for(Ingredient ingredient: design.getIngredients()) {
 			saveIngredientsToTaco(ingredient, tacoId);
 		}
@@ -36,10 +37,18 @@ public class JdbcTacoRepository implements TacoRepository {
 	}
 
 	private long saveTacoInfo(Taco design) {
+		System.out.println("Fecha de creación del taco: " + design.getCreateAt().getTime()); // Impresión de la fecha
 		
-		PreparedStatementCreatorFactory pscf = new PreparedStatementCreatorFactory("INSERT INTO Taco (name, createdAt) VALUES(?, ?)", Types.VARCHAR, Types.TIMESTAMP);
+		PreparedStatementCreatorFactory pscf = new PreparedStatementCreatorFactory(
+				"INSERT INTO Taco (name, createdAt) VALUES(?, ?)", 
+				Types.VARCHAR, 
+				Types.TIMESTAMP
+				);
 		pscf.setReturnGeneratedKeys(true);
-		PreparedStatementCreator psc = pscf.newPreparedStatementCreator(Arrays.asList(design.getName(), new Timestamp(design.getCreateAt().getTime())));
+		
+		PreparedStatementCreator psc = pscf.newPreparedStatementCreator(
+				Arrays.asList(design.getName(), new Timestamp(design.getCreateAt().getTime()))
+				);
 		
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		
@@ -50,7 +59,11 @@ public class JdbcTacoRepository implements TacoRepository {
 	}
 	
 	private void saveIngredientsToTaco(Ingredient ingredient, long tacoId) {
-		jdbc.update("INSERT INTO Taco_Ingredients(taco_id, ingredient_id) VALUES(?, ?)", tacoId, ingredient.getId());
+		jdbc.update(
+				"INSERT INTO Taco_Ingredients(taco_id, ingredient_id) VALUES(?, ?)", 
+				tacoId, 
+				ingredient.getId()
+				);
 		
 	}
 

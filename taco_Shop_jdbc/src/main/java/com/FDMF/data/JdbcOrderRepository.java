@@ -1,5 +1,6 @@
 package com.FDMF.data;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -44,14 +45,14 @@ public class JdbcOrderRepository implements OrderRepository {
 	}
 
 	private long saveOrderDetails(Order order) {
-		@SuppressWarnings("unchecked")
-		Map<String, Object> values = objectMapper.convertValue(order, Map.class);
-		values.put("placeAt", order.getPlacedAt());
-		
-		long orderId = orderInserter.executeAndReturnKey(values).longValue();
-		
-		return orderId;
+	    @SuppressWarnings("unchecked")
+	    Map<String, Object> values = objectMapper.convertValue(order, Map.class);
+	    values.put("placedAt", new Timestamp(order.getPlacedAt().getTime()));
+	    
+	    long orderId = orderInserter.executeAndReturnKey(values).longValue();
+	    return orderId;
 	}
+
 	
 	private void saveTacoToOrder(Taco taco, long orderId) {
 		Map<String, Object> values = new HashMap<>();

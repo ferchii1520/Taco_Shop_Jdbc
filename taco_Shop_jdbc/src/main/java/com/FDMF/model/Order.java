@@ -18,12 +18,12 @@ public class Order {
 	private Date placedAt;
 	
 	@NotBlank(message = "Name is required")
-	private String name;
-	private String street;
-	private String city;
-	private String state;
-	private String zip;
-	@CreditCardNumber(message = "Invalid credit card number")
+	private String deliveryName;
+	private String deliveryStreet;
+	private String deliveryCity;
+	private String deliveryState;
+	private String deliveryZip;
+	//@CreditCardNumber(message = "Invalid credit card number")
 	private String ccNumber;
 	@Pattern(regexp = "^(0[-9]|1[0-2])([\\/])([1-9][0-9])$", message = "Must be formatted MM/YY")
 	private String ccExpiration;
